@@ -2,6 +2,9 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <vector>
+#include <sstream>
+#include <iterator>
 
 typedef enum
 {
@@ -10,7 +13,7 @@ typedef enum
 	IDENTIFIER,
 	INT_CONST,
 	STRING_CONST
-} TokenType;
+} Token;
 
 class JackTokenizer
 {
@@ -20,11 +23,23 @@ public:
 
 	void WriteToFile(std::ofstream &outputFile);
 
-
-private:
-	std::ifstream tokenFile;
 	void Advance();
 	bool HasMoreTokens();
+
+	std::string token;
+	
+private:
+	std::ifstream jackFile;
+
+	std::string currentLine;
+	bool isComment;
+	
+
+	std::string& ltrim(std::string&, const char* t);
+	std::string& rtrim(std::string&, const char* t);
+	std::string& trim(std::string&, const char* t);
+
+
 	void GetNextToken();
 };
 

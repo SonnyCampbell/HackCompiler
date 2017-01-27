@@ -42,7 +42,11 @@ int main()
 		std::string fileNameStart = f.substr(0, ext);
 		outputFile.open(search_path + "my" + fileNameStart + "T.xml");
 
-
+		while (tokenizer->HasMoreTokens())
+		{
+			tokenizer->Advance();
+			std::cout << tokenizer->token << std::endl;
+		}
 
 
 
@@ -52,6 +56,9 @@ int main()
 
 		delete tokenizer;
 	}
+
+	int x;
+	std::cin >> x;
 
     return 0;
 }
