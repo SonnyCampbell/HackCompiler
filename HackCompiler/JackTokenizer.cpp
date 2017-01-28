@@ -52,12 +52,19 @@ void JackTokenizer::GetNextToken()
 			}
 			
 
-			while (isComment)
+			while (isComment || (currentLine[0] == '/' && currentLine[1] == '*'))
 			{
-				// FUCK YOU, YOU SHITTY FUCK
-				if (currentLine.find_first_of("*") != std::string::npos)
+				// For some reason the below doesn't work, so I hacked this crap together
+				// currentLine.find_first_of("*/") != std::string::npos                  
+				// I should probably be using some form of REGEX
+				while (currentLine.find_first_of("*") != std::string::npos)
 				{
-					isComment = false;
+					std::string endComment = currentLine.substr(currentLine.find_first_of("*"), 2);
+					currentLine = currentLine.substr(currentLine.find_first_of(endComment), currentLine.size());
+					if (endComment == "*/")
+						isComment = false;
+
+					currentLine.erase(currentLine.find_first_of(endComment), 2);
 				}
 					
 
